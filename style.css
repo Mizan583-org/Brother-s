@@ -1,1 +1,17 @@
+body {
+  font-family: sans-serif;
+  text-align: center;
+  margin-top: 100px;
+  background: #f0f0f0;
+}
+
+#installBtn {
+  padding: 12px 24px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: #000;
+  color: white;
+  border: none;
+}
 
