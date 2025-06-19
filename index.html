@@ -1,1 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Brothes</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="install-block">
+    <h1>Welcome to Brothes</h1>
+    <button id="installBtn">Enter</button>
+  </div>
+
+  <div id="app-content" style="display: none;">
+    <h2>🎉 You are inside the app!</h2>
+    <p>This behaves like a real app now.</p>
+    <!-- Add your links/buttons here -->
+  </div>
+
+  <script>
+    let deferredPrompt;
+    const installBtn = document.getElementById('installBtn');
+    const appContent = document.getElementById('app-content');
+    const installBlock = document.getElementById('install-block');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'inline-block';
+    });
+
+    installBtn.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          installBlock.style.display = 'none';
+          appContent.style.display = 'block';
+        }
+      }
+    });
+
+    window.addEventListener('appinstalled', () => {
+      installBlock.style.display = 'none';
+      appContent.style.display = 'block';
+    });
+  </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js');
+    }
+  </script>
+</body>
+</html>
 
